@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdx8i1sdwuuy7"]
+
+[ext_resource type="Script" path="res://src/nodes/gameplay/classes/gd_item.gd" id="1_i7ipb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1lf4h"]
+
+[node name="Item" type="RigidBody3D"]
+script = ExtResource("1_i7ipb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_1lf4h")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]

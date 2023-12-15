@@ -1,0 +1,76 @@
+[gd_scene load_steps=13 format=3 uid="uid://bnky4lgm14xhg"]
+
+[ext_resource type="Script" path="res://src/nodes/gameplay/character/gd_character.gd" id="1_vw7wc"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/classes/gd_inventory_controller.gd" id="2_advwd"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/classes/gd_inventory_loader.gd" id="2_xh06f"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/classes/resources/gd_inventory.gd" id="4_dotj5"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/essentials/gd_camera.gd" id="5_8tk6p"]
+[ext_resource type="Texture2D" uid="uid://pkaer6wheikx" path="res://data/textures/UI/cursor-rain.png" id="7_8gj5h"]
+[ext_resource type="PackedScene" uid="uid://mkqjyvktllq" path="res://scenes/nodes/UI/sc_ui.tscn" id="7_500v7"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/character/gd_pick_ray.gd" id="7_d5td3"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/character/gd_rain_detector.gd" id="8_c6jvd"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/character/gd_hunger_depletion.gd" id="10_vd476"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bnxp5"]
+height = 2.2
+
+[sub_resource type="Resource" id="Resource_8yrox"]
+script = ExtResource("4_dotj5")
+items = null
+size = 4
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("inventory")]
+script = ExtResource("1_vw7wc")
+inventory = NodePath("InventoryWrapper")
+max_damaged = 50
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_bnxp5")
+
+[node name="InventoryController" type="Node" parent="." node_paths=PackedStringArray("wrapper")]
+script = ExtResource("2_advwd")
+wrapper = NodePath("../InventoryWrapper")
+
+[node name="InventoryWrapper" type="Node" parent="."]
+script = ExtResource("2_xh06f")
+inventory = SubResource("Resource_8yrox")
+
+[node name="CameraOffset" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.758977, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraOffset"]
+script = ExtResource("5_8tk6p")
+
+[node name="InteractRay" type="RayCast3D" parent="CameraOffset/Camera"]
+target_position = Vector3(0, 0, -2.2)
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("7_d5td3")
+
+[node name="ItemOffset" type="Node3D" parent="CameraOffset/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.6, -1.302)
+
+[node name="UI" parent="CameraOffset/Camera" node_paths=PackedStringArray("wrapper") instance=ExtResource("7_500v7")]
+wrapper = NodePath("../../../InventoryWrapper")
+cursor_texture = ExtResource("7_8gj5h")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(0.8, 2, 0.8)
+
+[node name="RainDetector" type="RayCast3D" parent="." node_paths=PackedStringArray("target", "damage_rate")]
+enabled = false
+target_position = Vector3(0, 1000, 0)
+script = ExtResource("8_c6jvd")
+target = NodePath("..")
+damage_rate = NodePath("Rate")
+damage_amount = 0
+
+[node name="Rate" type="Timer" parent="RainDetector"]
+wait_time = 0.5
+autostart = true
+
+[node name="HungerRate" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+script = ExtResource("10_vd476")
+depletion_amount = 5

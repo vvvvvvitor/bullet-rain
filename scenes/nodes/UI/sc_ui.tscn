@@ -1,0 +1,325 @@
+[gd_scene load_steps=30 format=3 uid="uid://mkqjyvktllq"]
+
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_UI.gd" id="1_k4ots"]
+[ext_resource type="Theme" uid="uid://pa2oqfxra317" path="res://data/UI/def_theme.tres" id="2_im0kt"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_HUD.gd" id="3_ydwjy"]
+[ext_resource type="Texture2D" uid="uid://d18iakn41jmwl" path="res://data/textures/UI/heart_icon.png" id="4_swv63"]
+[ext_resource type="Shader" path="res://src/shaders/canvas/sh_wavy.gdshader" id="5_3o44j"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_health_display.gd" id="6_p430d"]
+[ext_resource type="Texture2D" uid="uid://cw2c2iiij2aje" path="res://data/textures/UI/hunger_icon.png" id="7_mtifo"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_hunger_display.gd" id="8_1erpq"]
+[ext_resource type="Texture2D" uid="uid://gcw4nxpa8s4r" path="res://data/textures/UI/TAB.png" id="9_bvbqq"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/classes/gd_input_image.gd" id="10_orr6u"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_pick_label.gd" id="11_y8xh7"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_inventory_display.gd" id="12_abmlk"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_death_screen.gd" id="13_yq6lk"]
+[ext_resource type="Shader" path="res://src/shaders/canvas/sh_scroll.gdshader" id="14_3rexe"]
+[ext_resource type="Texture2D" uid="uid://cn101aaw3edf6" path="res://data/textures/UI/sad_face_small.png" id="15_w8tr2"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_show_buttons.gd" id="16_1am76"]
+[ext_resource type="LabelSettings" uid="uid://ur8f1cqdvi32" path="res://data/UI/fonts/def_label_settings.tres" id="16_3f76e"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_quit_button.gd" id="17_ue541"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_pause_screen.gd" id="19_pdwiu"]
+[ext_resource type="Texture2D" uid="uid://cvo67fbvgbum2" path="res://data/textures/UI/pause_icon.png" id="20_xv3nq"]
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_quitting_graphic.gd" id="21_e4cbh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmbjy"]
+shader = ExtResource("5_3o44j")
+shader_parameter/strength = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_eikco"]
+outline_size = 13
+outline_color = Color(1, 1, 1, 0.117647)
+shadow_size = 0
+shadow_color = Color(0.862745, 0.247059, 0.364706, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mxgbe"]
+shader = ExtResource("5_3o44j")
+shader_parameter/strength = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_b0f8p"]
+outline_size = 13
+outline_color = Color(1, 1, 1, 0.117647)
+shadow_size = 0
+shadow_color = Color(0.639216, 0.403922, 0.403922, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vj08"]
+atlas = ExtResource("9_bvbqq")
+region = Rect2(0, 0, 17, 10)
+
+[sub_resource type="LabelSettings" id="LabelSettings_iqd3x"]
+line_spacing = 2.0
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_248be"]
+shader = ExtResource("14_3rexe")
+shader_parameter/modulate = Vector4(0, 0, 0, -0.891)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_txc6h"]
+shader = ExtResource("5_3o44j")
+shader_parameter/strength = 11.829
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_k4ots")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_im0kt")
+
+[node name="HUD" type="VBoxContainer" parent="ReferenceRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ydwjy")
+
+[node name="TopHalf" type="BoxContainer" parent="ReferenceRect/HUD"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ReferenceRect/HUD/TopHalf"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="InfoDisplay" type="HBoxContainer" parent="ReferenceRect/HUD/TopHalf/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Health" type="HBoxContainer" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay/Health"]
+layout_mode = 2
+texture = ExtResource("4_swv63")
+stretch_mode = 5
+
+[node name="HealthDisplay" type="Label" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay/Health"]
+material = SubResource("ShaderMaterial_tmbjy")
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_eikco")
+script = ExtResource("6_p430d")
+
+[node name="Hunger" type="HBoxContainer" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay/Hunger"]
+layout_mode = 2
+texture = ExtResource("7_mtifo")
+stretch_mode = 5
+
+[node name="HungerDisplay" type="Label" parent="ReferenceRect/HUD/TopHalf/MarginContainer/InfoDisplay/Hunger"]
+material = SubResource("ShaderMaterial_mxgbe")
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_b0f8p")
+script = ExtResource("8_1erpq")
+
+[node name="Center" type="BoxContainer" parent="ReferenceRect/HUD"]
+layout_mode = 2
+
+[node name="BottomHalf" type="BoxContainer" parent="ReferenceRect/HUD"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryHUD" type="VBoxContainer" parent="ReferenceRect/HUD/BottomHalf"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="ReferenceRect/HUD/BottomHalf/InventoryHUD"]
+custom_minimum_size = Vector2(92.589, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
+alignment = 1
+
+[node name="ButtonImage" type="TextureRect" parent="ReferenceRect/HUD/BottomHalf/InventoryHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_0vj08")
+stretch_mode = 6
+script = ExtResource("10_orr6u")
+action_name = "action_interact"
+
+[node name="PickLabel" type="Label" parent="ReferenceRect/HUD/BottomHalf/InventoryHUD/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Pick ITEM"
+label_settings = SubResource("LabelSettings_iqd3x")
+horizontal_alignment = 1
+script = ExtResource("11_y8xh7")
+
+[node name="MarginContainer" type="MarginContainer" parent="ReferenceRect/HUD/BottomHalf/InventoryHUD"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="Inventory" type="HBoxContainer" parent="ReferenceRect/HUD/BottomHalf/InventoryHUD/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_constants/separation = 2
+script = ExtResource("12_abmlk")
+
+[node name="DeathScreen" type="Control" parent="ReferenceRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_yq6lk")
+
+[node name="ColorRect" type="ColorRect" parent="ReferenceRect/DeathScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.352941, 1, 0.831373)
+
+[node name="TextureRect" type="TextureRect" parent="ReferenceRect/DeathScreen"]
+modulate = Color(0, 0, 0.686275, 0.262745)
+material = SubResource("ShaderMaterial_248be")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_w8tr2")
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ReferenceRect/DeathScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ReferenceRect/DeathScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="DeathText" type="Label" parent="ReferenceRect/DeathScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "cnn_err:
+You have died."
+label_settings = ExtResource("16_3f76e")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Buttons" type="VBoxContainer" parent="ReferenceRect/DeathScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("16_1am76")
+
+[node name="Quit" type="Button" parent="ReferenceRect/DeathScreen/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Power Off"
+script = ExtResource("17_ue541")
+
+[node name="Restart" type="Button" parent="ReferenceRect/DeathScreen/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Restart Machine"
+
+[node name="PauseScreen" type="Control" parent="ReferenceRect"]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("19_pdwiu")
+
+[node name="ColorRect" type="ColorRect" parent="ReferenceRect/PauseScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.352941, 1, 0.831373)
+
+[node name="TextureRect" type="TextureRect" parent="ReferenceRect/PauseScreen"]
+modulate = Color(0, 0, 0.686275, 0.262745)
+material = SubResource("ShaderMaterial_248be")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_xv3nq")
+stretch_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ReferenceRect/PauseScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="ReferenceRect/PauseScreen/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -4
+alignment = 1
+
+[node name="Label" type="Label" parent="ReferenceRect/PauseScreen/MarginContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_txc6h")
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Paused"
+label_settings = ExtResource("16_3f76e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ReferenceRect/PauseScreen/MarginContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.54902)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "(Hold enter to quit)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ReferenceRect/PauseScreen/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_swv63")
+stretch_mode = 5
+script = ExtResource("21_e4cbh")

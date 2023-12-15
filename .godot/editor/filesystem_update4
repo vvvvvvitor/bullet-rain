@@ -1,0 +1,4 @@
+res://scenes/debug/0-0.tscn
+res://data/UI/def_theme.tres
+res://src/nodes/autoloads/gd_master.gd
+res://scenes/nodes/UI/sc_ui.tscn

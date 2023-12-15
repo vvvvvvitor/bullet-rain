@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgrnrx0ihymb5"]
+
+[ext_resource type="Script" path="res://src/nodes/gameplay/UI/gd_inv_slot.gd" id="1_10460"]
+
+[node name="Slot" type="Panel"]
+custom_minimum_size = Vector2(10, 10)
+size_flags_vertical = 8
+script = ExtResource("1_10460")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Thumbnail" type="TextureRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
